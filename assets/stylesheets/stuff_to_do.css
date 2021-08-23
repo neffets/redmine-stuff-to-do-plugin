@@ -62,7 +62,7 @@ div#panes form { display: flex; }
 .even.priority-lowest, .even.priority-lowest:hover { color: #559; }
 .even.priority-lowest { background: #f2faff; }
 .priority-lowest a { color: #559; }
-.odd.priority-lowest , .even.priority-lowest { border-color: #add7f3; }
+.odd.priority-lowest, .even.priority-lowest { border-color: #add7f3; }
 /* */
 
 /* Time Grid */
