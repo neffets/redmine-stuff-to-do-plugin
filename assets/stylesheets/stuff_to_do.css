@@ -31,21 +31,21 @@ div#panes form { display: flex; }
 .even.priority-highest, .even.priority-highest:hover { color: #900; font-weight: bold; }
 .even.priority-highest { background: #ffd4d4; }
 .priority-highest a, .priority-5:hover a { color: #900; }
-.odd.priority-highest , .even.priority-highest { border-color: #ffb4b4; }
+.odd.priority-highest, .even.priority-highest { border-color: #ffb4b4; }
 
 .odd.priority-high2, .odd.priority-high4:hover { color: #900; }
 .odd.priority-high2 { background: #ffc4c4; }
 .even.priority-high2, .even.priority-high4:hover { color: #900; }
 .even.priority-high2 { background: #ffd4d4; }
 .priority-high2 a { color: #900; }
-.odd.priority-high2 , .even.priority-high4 { border-color: #ffb4b4; }
+.odd.priority-high2, .even.priority-high4 { border-color: #ffb4b4; }
 
 .odd.priority-high3, .odd.priority-high3:hover { color: #900; }
 .odd.priority-high3 { background: #fee; }
 .even.priority-high3, .even.priority-high3:hover { color: #900; }
 .even.priority-high3 { background: #fff2f2; }
 .priority-high3 a { color: #900; }
-.odd.priority-high3 , .even.priority-high3 { border-color: #fcc; }
+.odd.priority-high3, .even.priority-high3 { border-color: #fcc; }
 
 .odd.priority-high4, .odd.priority-high4:hover { font-weight: bold; }
 .even.priority-high4, .even.priority-high4:hover { font-weight: bold; }
