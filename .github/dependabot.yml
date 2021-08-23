@@ -9,11 +9,3 @@ updates:
       prefix: "[Production]"
       prefix-development: "[Development]"
     open-pull-requests-limit: 10
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "11:00"
-    commit-message:
-      prefix: "[Development]"
-    open-pull-requests-limit: 10
