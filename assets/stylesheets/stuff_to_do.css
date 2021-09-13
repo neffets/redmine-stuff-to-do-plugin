@@ -65,10 +65,9 @@ div#panes form { display: flex; }
 .odd.priority-lowest, .even.priority-lowest { border-color: #add7f3; }
 /* */
 
-.stuff-to-do-item { background: #f2e6d9; color: #aaa !important; font-weight: normal; border: 0; font-style: italic; }
-.stuff-to-do-item.assigned-to-me { background: inherit; color: inherit !important; font-weight: inherit; border: inherit; font-style: inherit; }
-.stuff-to-do-item.closed { background: #f2e6d9 !important; color: #aaa !important; border: 0; font-style: italic; }
-.stuff-to-do-item.closed div.issue-details { text-decoration: line-through; }
+.splitcontentleft .stuff-to-do-item:not(.assigned-to-me) { background: #f2e6d9; color: #aaa !important; font-weight: normal; border: 0; font-style: italic; }
+.splitcontentleft .stuff-to-do-item.closed { background: #f2e6d9 !important; color: #aaa !important; border: 0; font-style: italic; }
+.splitcontentleft .stuff-to-do-item.closed div.issue-details { text-decoration: line-through; }
 
 /* Time Grid */
 #time-grid-table tbody tr { height: 3em; }
