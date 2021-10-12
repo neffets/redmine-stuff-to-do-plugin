@@ -138,6 +138,7 @@ Gem::Specification.new do |s|
      "config/locales/ru.yml",
      "config/locales/sv.yml",
      "config/locales/tr.yml",
+     "config/locales/zh-CN.yml",
      "config/routes.rb",
      "init.rb",
      "lang/bg.yml",
