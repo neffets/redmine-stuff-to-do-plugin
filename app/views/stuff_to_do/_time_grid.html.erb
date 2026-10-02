@@ -28,7 +28,7 @@
   </thead>
   <tbody>
     <% @spent_issues.each do |issue| %>
-    <tr id="issue-<%= issue.id %>" class="issue">
+    <tr id="issue_<%= issue.id %>" class="issue">
       <td class="time-grid-project">
         <%= link_to(h(issue.project), controller: 'projects', action: 'show', id: issue.project) %>
       </td>
