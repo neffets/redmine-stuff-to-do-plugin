@@ -165,7 +165,7 @@ jQuery(function($) {
 
   var isItemInTimeGrid = function(element) {
     var record_id = getRecordId(element);
-    return $('td.time-grid-issue issue_' + record_id).size() > 0;
+    return $('#time-grid-table #issue-' + record_id).length > 0;
   };
 
   var isAddingAnIssueToTimeGrid = function(jqueryElement) {
