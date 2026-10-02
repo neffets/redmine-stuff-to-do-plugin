@@ -73,7 +73,10 @@ jQuery(function($) {
 
     $("#time-grid-table tbody").sortable({
       connectWith: ["#available", "#doing-now", "#recommended"],
-      items: 'tr',
+      // Do NOT set items:'tr' — jQuery UI 1.12+ uses that filter to gate
+      // connectWith receives too, so <li> items from the panes would never
+      // trigger the receive callback.  Internal reordering is blocked via
+      // the update callback below instead.
       placeholder: 'drop-accepted',
       // Cancel the drag and drop if it's reordering itself
       update: function (event, ui) {
@@ -82,10 +85,13 @@ jQuery(function($) {
         }
       },
       receive : function (event, ui) {
-        $(ui.sender).sortable('cancel');
-        if (isAddingAnIssueToTimeGrid($(ui.sender))) {
-          var std_item = ui.item;
-          // Only add issues that are missing.
+        var $sender  = $(ui.sender);
+        var std_item = ui.item;
+        // Defer cancel so jQuery UI 1.13 finishes its internal drop
+        // bookkeeping before we move the item back to the sender list.
+        setTimeout(function() { $sender.sortable('cancel'); }, 0);
+        if (isAddingAnIssueToTimeGrid($sender)) {
+          // Only add issues that are not already in the time grid.
           if (!isProjectItem(std_item) && !isItemInTimeGrid(std_item)) {
             addItemToTimeGrid(std_item);
           }
