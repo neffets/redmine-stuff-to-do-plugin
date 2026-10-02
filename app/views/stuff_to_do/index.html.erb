@@ -63,17 +63,21 @@
   <%= javascript_include_tag 'stuff-to-do.js', plugin: 'stuff_to_do_plugin' %>
   <%= javascript_tag("var user_id = #{@user.id};") %>
   <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
+  <% _plugin_dir = Redmine::Plugin.find(:stuff_to_do_plugin).directory %>
+  <% _loading_b64 = Base64.strict_encode64(File.binread(File.join(_plugin_dir, 'assets', 'images', 'loading.gif'))) %>
+  <% _close_b64   = Base64.strict_encode64(File.binread(File.join(_plugin_dir, 'assets', 'images', 'closelabel.gif'))) %>
   <%= javascript_tag do %>
     jQuery(function($) {
+      var closeDataUri   = 'data:image/gif;base64,<%= _close_b64 %>';
       $.extend($.facebox.settings, {
-        loadingImage: '<%= image_path("loading.gif", plugin: "stuff_to_do_plugin") %>',
-        closeImage:   '<%= image_path("closelabel.gif", plugin: "stuff_to_do_plugin") %>'
+        loadingImage: 'data:image/gif;base64,<%= _loading_b64 %>',
+        closeImage:   closeDataUri
       });
       var html = $.facebox.settings.faceboxHtml;
       if (html) {
         $.facebox.settings.faceboxHtml = html.replace(
           /src="[^"]*closelabel\.gif"/,
-          'src="' + $.facebox.settings.closeImage + '"'
+          'src="' + closeDataUri + '"'
         );
       }
     });
