@@ -109,9 +109,8 @@ class StuffToDoController < ApplicationController
   def save_time_entry
     @time_entry = TimeEntry.new
     @time_entry.user = User.current
-    if params[:time_entry] &&  params[:time_entry].first
-      @time_entry.safe_attributes = params[:time_entry].first
-      # [ :issue_id, :spent_on, :hours, :comments, :activity_id ]
+    if params[:time_entry]
+      @time_entry.safe_attributes = params[:time_entry]
     end
     @time_entry.project = @time_entry.issue.project if @time_entry.issue
     respond_to do |format|

@@ -189,17 +189,16 @@ jQuery(function($) {
   };
 
   var timeLogFacebox = function(issue_id, date) {
-    if (issue_id != undefined) {
-      $('#time_entry__issue_id').val(issue_id);
-    }
-
-    if (date != undefined) {
-      $('#time_entry__spent_on').val(date); // Renamed below
-    }
-
+    $(document).one('reveal.facebox', function() {
+      if (issue_id != undefined) {
+        $('#facebox #time_entry_issue_id').val(issue_id);
+      }
+      if (date != undefined) {
+        $('#facebox #time_entry_spent_on').val(date);
+      }
+      bindTimeEntryForm();
+    });
     $.facebox({div: '#logtime'});
-      bindTimeEntryForm(); // Rebind since Facebox copies it
-      //$('#time_entry__spent_on').datepicker("refresh");
   };
 
   var parseIssueId = function(jqueryElement) {
