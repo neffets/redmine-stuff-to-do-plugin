@@ -191,10 +191,10 @@ jQuery(function($) {
   var timeLogFacebox = function(issue_id, date) {
     $(document).one('reveal.facebox', function() {
       if (issue_id != undefined) {
-        $('#facebox #time_entry_issue_id').val(issue_id);
+        $('#facebox input[name="time_entry[issue_id]"]').val(issue_id);
       }
       if (date != undefined) {
-        $('#facebox #time_entry_spent_on').val(date);
+        $('#facebox input[name="time_entry[spent_on]"]').val(date);
       }
       bindTimeEntryForm();
     });
@@ -241,7 +241,7 @@ jQuery(function($) {
   };
 
   var bindTimeEntryForm = function() {
-    $('#facebox #logtime form').submit(function(){
+    $('#facebox #new-time-entry').submit(function(){
       saveTimeEntriesRemotely(this);
       return false;
     });
