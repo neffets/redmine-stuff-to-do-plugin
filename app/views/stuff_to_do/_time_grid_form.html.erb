@@ -58,17 +58,18 @@
 $(document).ready(
     function () {
         $("a.gridsubmit")
-            /* ajax:success sometimes not called */
-            .on("ajax:complete", function (evt, data, status, xhr) {
-                console.log(data.statusText);
-                if (data.statusText == "OK") {
-                    $("#time-grid").html(data.responseText);
+            /* rails-ujs passes xhr/status in event.detail instead of extra arguments */
+            .on("ajax:complete", function (evt) {
+                var xhr    = evt.detail[0];
+                var status = evt.detail[1];
+                if (status == "OK") {
+                    $("#time-grid").html(xhr.responseText);
                 }
             });
         $("#time_grid_button_submit")
-            .on("ajax:beforeSend", function (evt, data, status, xhr) {
-                status.url = status.url.replace(/time_grid.*\?.*/, 'time_grid?' + $("#query_form").serialize());
-                console.log(status.url);
+            .on("ajax:beforeSend", function (evt) {
+                var options = evt.detail[1];
+                options.url = options.url.replace(/time_grid.*\?.*/, 'time_grid?' + $("#query_form").serialize());
             });
     }
 );
