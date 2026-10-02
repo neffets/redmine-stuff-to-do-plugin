@@ -1,4 +1,4 @@
-<% form = form_tag({ action: 'time_grid' }, id: 'query_form', remote: true) do %>
+<% form = form_tag({ action: 'time_grid' }, id: 'query_form') do %>
 <fieldset id="date-range"><legend><%= l(:label_date_range) %></legend>
     <%= select_month(@date.month, prefix: "month", discard_type: true) %>
     <%= select_day(@date.day, prefix: "day", discard_type: true) %>
@@ -6,72 +6,45 @@
 </fieldset>
 
 <p style="float:right; margin:0px;">
-<%= link_to("« #{l(:label_previous)} #{l(:label_week)}",
-                   { url: { action: 'time_grid', date: @date - 7 },
-                     remote: true,
-                     update: "time-grid"
-                   },
-                   {
-                     href: url_for(action: 'time_grid', date: @date - 7),
-                     class: "gridsubmit"
-                   })
-                   %> |
-<%= link_to("#{l(:label_next)} #{l(:label_week)} »", 
-                   { url: { action: 'time_grid', date: @date + 7 },
-                     remote: true,
-                     update: "time-grid"
-                   },
-                   {
-                     href: url_for(action: 'time_grid', date: @date + 7),
-                     class: "gridsubmit"
-                   })
-                   %>
+<%= link_to "« #{l(:label_previous)} #{l(:label_week)}", url_for(action: 'time_grid', date: @date - 7), class: "gridsubmit" %> |
+<%= link_to "#{l(:label_next)} #{l(:label_week)} »",     url_for(action: 'time_grid', date: @date + 7), class: "gridsubmit" %>
 </p>
 
 <p class="buttons">
-<%= link_to l(:button_apply),
-                   { url: { action: "time_grid" },
-                     remote: true,
-                     action: "time_grid",
-                     update: "time-grid"
-                   },
-                   {
-                     id: "time_grid_button_submit",
-                     class: "icon icon-checked gridsubmit"
-                   }
-%>
- 
-<%= link_to l(:button_clear),
-                   { url: { action: "time_grid" },
-                     remote: true,
-                     update: "time-grid"
-                   },
-                   {
-                     class: "icon icon-reload"
-                   }
-%>
+<a id="time_grid_button_submit" class="icon icon-checked" href="#"><%= l(:button_apply) %></a>
+<%= link_to l(:button_clear), url_for(action: 'time_grid'), class: "icon icon-reload gridsubmit" %>
 </p>
 <% end %>
 <%= form %>
 
 <%= javascript_tag do %>
-$(document).ready(
-    function () {
-        $("a.gridsubmit")
-            /* rails-ujs passes xhr/status in event.detail instead of extra arguments */
-            .on("ajax:complete", function (evt) {
-                var xhr    = evt.detail[0];
-                var status = evt.detail[1];
-                if (status == "OK") {
-                    $("#time-grid").html(xhr.responseText);
-                }
-            });
-        $("#time_grid_button_submit")
-            .on("ajax:beforeSend", function (evt) {
-                var options = evt.detail[1];
-                options.url = options.url.replace(/time_grid.*\?.*/, 'time_grid?' + $("#query_form").serialize());
-            });
+$(document).ready(function () {
+    function loadTimeGrid(url) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "html",
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            success: function (response) {
+                $("#time-grid").html(response);
+            },
+            error: function () {
+                $("div#time-grid-error").text("Error loading time grid. Please refresh the page.").show();
+            }
+        });
     }
-);
-<% end %>
 
+    $("a.gridsubmit").on("click", function (e) {
+        e.preventDefault();
+        loadTimeGrid($(this).attr("href"));
+    });
+
+    $("#time_grid_button_submit").on("click", function (e) {
+        e.preventDefault();
+        var year  = $("#year").val();
+        var month = String(parseInt($("#month").val())).padStart(2, '0');
+        var day   = String(parseInt($("#day").val())).padStart(2, '0');
+        loadTimeGrid('/time_grid/' + year + '-' + month + '-' + day);
+    });
+});
+<% end %>

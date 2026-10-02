@@ -77,8 +77,14 @@ class StuffToDoController < ApplicationController
     get_time_grid
     Rails.logger.debug "get_time_grid issues = #{@spent_issues.inspect}"
     respond_to do |format|
-      format.html { redirect_to action: 'index'}
-      format.js { render partial: 'time_grid', layout: false}
+      format.html {
+        if request.xhr?
+          render partial: 'time_grid', layout: false
+        else
+          redirect_to action: 'index'
+        end
+      }
+      format.js { render partial: 'time_grid', layout: false }
     end
   end
 
