@@ -267,10 +267,9 @@ jQuery(function($) {
 
   attachSortables();
 
-  // Fix the image paths in facebox
+  // Image paths and faceboxHtml are set in index.html.erb via image_path helper.
+  // Only set the HTML template here; image src is patched by the view script.
   $.extend($.facebox.settings, {
-    loadingImage: '/plugin_assets/stuff_to_do_plugin/images/loading.gif',
-    closeImage: '/plugin_assets/stuff_to_do_plugin/images/closelabel.gif',
     faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
       <div class="popup"> \
