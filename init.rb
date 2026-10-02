@@ -3,29 +3,13 @@
 require 'redmine'
 
 # Patches to the Redmine core.
-
-# Rails 5.1/Rails 4
-reloader = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
-reloader.to_prepare do
+# Rails 7 / Redmine 6 removed ActionDispatch::Reloader, require_dependency, and unloadable.
+ActiveSupport::Reloader.to_prepare do
   require 'stuff_to_do_issue_patch'
   require 'stuff_to_do_user_patch'
   require 'stuff_to_do_user_preference_patch'
   require 'stuff_to_do_dispatch'
-end
-
-if Rails::VERSION::MAJOR >= 5
-  version = "#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}".to_f
-  PLUGIN_MIGRATION_CLASS = ActiveRecord::Migration[version]
-  preparation_class = ActiveSupport::Reloader
-else
-  PLUGIN_MIGRATION_CLASS = ActiveRecord::Migration
-  preparation_class = ActionDispatch::Callbacks
-end
-
-# This is the important line.
-# It requires the file in lib/stuff_to_do_plugin/hooks.rb
-preparation_class.to_prepare do
-  require_dependency 'stuff_to_do_plugin/hooks'
+  require 'stuff_to_do_plugin/hooks'
 end
 
 Redmine::Plugin.register :stuff_to_do_plugin do
@@ -33,10 +17,10 @@ Redmine::Plugin.register :stuff_to_do_plugin do
   author 'Eric Davis, Steffen Schüssler'
   url 'https://github.com/neffets/redmine-stuff-to-do-plugin'
   author_url 'https://github.com/neffets'
-  description "The Stuff To Do plugin allows a user to order and prioritize the issues they are doing into a specific order. It will also allow other privilged users to reorder the user's workload. compatible redmine 3.x - 5.x"
-  version '0.8.0'
+  description "The Stuff To Do plugin allows a user to order and prioritize the issues they are doing into a specific order. It will also allow other privileged users to reorder the user's workload. Compatible with Redmine 5.x - 6.x"
+  version '0.9.0'
 
-  requires_redmine version_or_higher: '4.0.0'
+  requires_redmine version_or_higher: '5.0.0'
 
   settings(partial: 'settings/stuff_to_do_settings',
            default: {

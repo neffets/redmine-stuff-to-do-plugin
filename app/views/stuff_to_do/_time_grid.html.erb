@@ -28,7 +28,7 @@
   </thead>
   <tbody>
     <% @spent_issues.each do |issue| %>
-    <%= content_tag_for(:tr, issue) do %>
+    <tr id="issue-<%= issue.id %>" class="issue">
       <td class="time-grid-project">
         <%= link_to(h(issue.project), controller: 'projects', action: 'show', id: issue.project) %>
       </td>
@@ -47,7 +47,7 @@
       <td class="time-grid-running-total issue-<%= h issue.id -%>">
         <%= h total_hours_for_issue_for_user(issue, User.current) %>
       </td>
-    <% end %>
+    </tr>
     <% end %>
     <tr class="daily-totals">
       <td colspan="2" class="label">
@@ -64,7 +64,6 @@
         <%= h total_hours_for_user(@spent_issues, User.current) %>
       </td>
     </tr>
-
   </tbody>
 </table>
 
@@ -81,8 +80,10 @@
 <div id="logtime" style="display:none;">
 <h2><%= l(:label_spent_time) %></h2>
 
-<%= labelled_form_for 'time_entry[]'.to_sym, @time_entry, url: {}, html: { id: 'new-time-entry'} do |f| %>
-<%= error_messages_for 'time_entry' %>
+<%= form_with model: @time_entry, url: url_for(controller: 'stuff_to_do', action: 'save_time_entry', format: :js), local: false, id: 'new-time-entry' do |f| %>
+<% if @time_entry.errors.any? %>
+  <ul class="errors"><% @time_entry.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %></ul>
+<% end %>
 <%= back_url_hidden_field_tag %>
 
 <div class="box">

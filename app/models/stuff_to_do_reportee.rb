@@ -1,6 +1,4 @@
 class StuffToDoReportee < ActiveRecord::Base
-  unloadable
-
   belongs_to :user
   belongs_to :reportee, class_name: 'User'
   belongs_to :group

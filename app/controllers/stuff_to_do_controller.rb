@@ -1,6 +1,4 @@
 class StuffToDoController < ApplicationController
-  unloadable
-
   include StuffToDoHelper
 
   before_action :get_user, :get_project
@@ -30,7 +28,7 @@ class StuffToDoController < ApplicationController
     end
      
     respond_to do |format|
-      format.html { redirect_to_referer_or { render text: ('Deleting Issue from stuff-to-do.'), layout: true} }
+      format.html { redirect_to_referer_or { render plain: 'Deleting Issue from stuff-to-do.', layout: true } }
       format.js { render partial: 'stuff-to-do', layout: false}
     end
   end
@@ -40,7 +38,7 @@ class StuffToDoController < ApplicationController
       StuffToDo.add(params[:user_id], params[:issue_id], params[:to_front] == "true")         
     end
     respond_to do |format|
-      format.html { redirect_to_referer_or { render text: ('Adding issue to stuff-to-do.'), layout: true} }
+      format.html { redirect_to_referer_or { render plain: 'Adding issue to stuff-to-do.', layout: true } }
       format.js { render partial: 'stuff-to-do', layout: false}
     end
   end
@@ -113,10 +111,10 @@ class StuffToDoController < ApplicationController
       if save_time_entry_from_time_grid(@time_entry)
         flash.now[:time_grid_notice] = l(:notice_successful_update)
         get_time_grid # after saving in order to get the updated data
-        
+
         format.js { time_grid }
       else
-        format.js { render text: @time_entry.errors.full_messages.join(', '), status: 403, layout: false }
+        format.js { render plain: @time_entry.errors.full_messages.join(', '), status: 403 }
       end
     end
   end
@@ -209,17 +207,6 @@ class StuffToDoController < ApplicationController
     date = Date.parse(params[:date]) if params[:date]
     date ||= Date.civil(params[:year].to_i, params[:month].to_i, params[:day].to_i) if params[:year] && params[:month] && params[:day]
     date ||= Date.today
-  end
-
-  def default_filters
-    if StuffToDo.using_issues_as_items?
-      return @user
-    elsif StuffToDo.using_projects_as_items?
-      return Project.new
-    else
-    # Edge case
-    return { }
-    end
   end
 
   def load_stuff(filters=nil)

@@ -88,7 +88,7 @@ class StuffToDo < ApplicationRecord
 
     # Deliver an email for each user who is below the threshold
     user_ids.uniq.each do |user_id|
-      count = self.select("user_id = %d" % user_id).count(:id)
+      count = self.where(user_id: user_id).count
 
       threshold = Setting.plugin_stuff_to_do_plugin['threshold']
 
@@ -104,11 +104,9 @@ class StuffToDo < ApplicationRecord
   # Destroys all +NextIssues+ on an +issue+ that are not the assigned to user
   def self.remove_stale_assignments(issue)
     if issue.assigned_to_id.nil?
-      self.destroy_all(['stuff_id = (?)', issue.id])
+      self.where('stuff_id = ?', issue.id).destroy_all
     else
-      self.destroy_all(['stuff_id = (?) AND user_id NOT IN (?)',
-                             issue.id,
-                             issue.assigned_to_id])
+      self.where('stuff_id = ? AND user_id NOT IN (?)', issue.id, issue.assigned_to_id).destroy_all
     end
   end
 

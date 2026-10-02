@@ -1,6 +1,4 @@
 class StuffToDoReporteeController < ApplicationController
-  unloadable
-
   before_action :get_user
 
   def index
