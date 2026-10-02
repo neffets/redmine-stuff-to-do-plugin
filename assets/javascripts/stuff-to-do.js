@@ -269,8 +269,8 @@ jQuery(function($) {
 
   // Fix the image paths in facebox
   $.extend($.facebox.settings, {
-    loadingImage: '../images/loading.gif',
-    closeImage: '../plugin_assets/stuff_to_do_plugin/images/closelabel.gif',
+    loadingImage: '/plugin_assets/stuff_to_do_plugin/images/loading.gif',
+    closeImage: '/plugin_assets/stuff_to_do_plugin/images/closelabel.gif',
     faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
       <div class="popup"> \
@@ -286,7 +286,7 @@ jQuery(function($) {
                 </div> \
                 <div class="footer"> \
                   <a href="#" class="close"> \
-                    <img src="../plugin_assets/stuff_to_do_plugin/images/closelabel.gif" title="close" class="close_image" /> \
+                    <img src="/plugin_assets/stuff_to_do_plugin/images/closelabel.gif" title="close" class="close_image" /> \
                   </a> \
                 </div> \
               </td> \
