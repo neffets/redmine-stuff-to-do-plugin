@@ -26,7 +26,7 @@ $(document).ready(function () {
             dataType: "html",
             headers: { "X-Requested-With": "XMLHttpRequest" },
             success: function (response) {
-                $("#time-grid").html(response);
+                $("#time-grid").replaceWith(response);
             },
             error: function () {
                 $("div#time-grid-error").text("Error loading time grid. Please refresh the page.").show();

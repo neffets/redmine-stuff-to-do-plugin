@@ -89,19 +89,20 @@ class StuffToDoController < ApplicationController
   end
 
   def add_to_time_grid
-    issue = Issue.visible.find_by_id(params[:issue_id])
-    # Issue exists and isn't already in user's list
+    issue = Issue.find_by_id(params[:issue_id])
     if issue && !User.current.time_grid_issues.exists?(issue.id)
       User.current.time_grid_issues << issue
+      User.current.time_grid_issues.reset
     end
-    get_time_grid
     time_grid
   end
 
   def remove_from_time_grid
-    issue = User.current.time_grid_issues.visible.find_by_id(params[:issue_id])
-    User.current.time_grid_issues.delete(issue) if issue
-    get_time_grid
+    issue = User.current.time_grid_issues.find_by_id(params[:issue_id])
+    if issue
+      User.current.time_grid_issues.delete(issue)
+      User.current.time_grid_issues.reset
+    end
     time_grid
   end
 

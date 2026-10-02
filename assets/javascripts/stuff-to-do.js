@@ -134,7 +134,7 @@ jQuery(function($) {
       dataType: 'html',
       data: addAuthenticityToken('issue_id=' + getRecordId(issue) + '&' + $('#query_form').serialize()),
       success: function(response) {
-        $('#time-grid').html(response);
+        $('#time-grid').replaceWith(response);
         attachSortables();
       },
       error: function(response) {
@@ -150,7 +150,7 @@ jQuery(function($) {
       dataType: 'html',
       data: addAuthenticityToken('issue_id=' + getRecordId(issue) + '&' + $('#query_form').serialize()),
       success: function(response) {
-        $('#time-grid').html(response);
+        $('#time-grid').replaceWith(response);
         attachSortables();
       },
       error: function(response) {
