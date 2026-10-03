@@ -1,7 +1,7 @@
 # Redmine Stuff To Do Plugin
 
 The Stuff To Do plugin allows a user to order and prioritize the issues and projects they are doing into a specific order. It will also allow other privileged users to reorder the user's workload.
-Master branch supports redmine version 3.x and up. For previous versions use the compatible branches.
+Main branch supports redmine version 6.x and up. For previous versions use the compatible branches (e.g. "redmine5" for redmine 3-5).
 
 ![StuffToDo](img/StuffToDo.png "Stuff to Do")
 
@@ -24,16 +24,16 @@ A copy of the plugin can be downloaded for original versions from Little Stream 
 ## Installation and Setup
 
 1. Follow the Redmine plugin installation steps at: https://www.redmine.org/projects/redmine/wiki/Plugins
-   * for redmine>=2.x/>=rails3: Make sure the plugin is installed to: *plugins/stuff_to_do_plugin*
+   * Make sure the plugin is installed to: *plugins/stuff_to_do_plugin*
 2. Run the plugin migrations
-   * for redmine>=2.x/>=rails3: *rake redmine:plugins:migrate*
+   * *rake redmine:plugins:migrate*
 3. Restart your Redmine web servers (e.g. mongrel, thin, mod_rails)
 4. Login and configure the plugin (Administration > Plugins > Configure)
 5. Setup permissions
-  1.  Use Stuff to Do - allow a user to manage their own Stuff to Do list
-  2. View Others Stuff to Do - allow a user to view the Stuff to Do list of their assignees (set in account/user settings)
+  1. Use Stuff to Do - allow a user to manage their own Stuff to Do list
+  2.  View Others Stuff to Do - allow a user to view the Stuff to Do list of their assignees (set in account/user settings)
   3.  View all users stuff to do - view the stuff to do of all users, even if they are not your assignee
-  4.  Manage Stuff to Do Reportees - allow a user to select whose Stuff to Do list they can view
+  4. Manage Stuff to Do Reportees - allow a user to select whose Stuff to Do list they can view
   5.  View All Reportee Issues - when viewing another's stuff to do list, view all available issues, even if they would not normally be visible to the current user
   6.  View All Reportee Stuff to Do - when viewing another's stuff to do list, view all issues that are currently in their Doing Now and Recommended lists
 6. Click the Stuff To Do link in the top left menu
@@ -56,7 +56,13 @@ This pane lists all the open issues that are assigned to the user or the project
 
 ### Time grid
 
-TODO: describe the "time_grid" feature
+The below time-grid-pane helps you manage you worked time on the items (issues)
+
+Issues can be add to the time-grid-pane and removed from the time-grid-pane per drag-n-drop from the other panes.
+
+The right week-view can be proceeded for or back
+
+In a day in the line of an issue you see the spent working-time or can add working-time per context-menu (right mouse click)
 
 ### Workflow
 
